@@ -1,0 +1,17 @@
+# Django specific
+*.log
+*.pot
+*.pyc
+__pycache__/
+.Python
+
+
+# Environments
+.env
+.venv/
+
+# IDEs
+.idea/
+*.swp
+*~
+.DS_Store
