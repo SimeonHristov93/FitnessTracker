@@ -32,7 +32,7 @@ DEBUG = os.getenv('DEBUG') == "True"
 ALLOWED_HOSTS = ["*"]
 
 
-# Application definitionw
+# Application definition
 
 PROJECT_APPS = [
     'exercises',
