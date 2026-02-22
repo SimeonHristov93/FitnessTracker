@@ -8,7 +8,7 @@ A comprehensive web application for tracking your fitness journey, built with Dj
 *   **Exercise Library:** Maintain a database of exercises with detailed instructions and muscle groups.
 *   **Progress Tracking:** Log your workouts, track duration, calories burned, and rate your sessions.
 *   **Dashboard:** Visualize your progress with statistics on completed workouts, total training time, and more.
-*   **Search:** Easily find workouts and exercises with a powerful search feature.
+*   **Search:** Effortlessly find workouts and exercises with a powerful search feature.
 *   **Responsive Design:** Fully responsive interface optimized for desktop and mobile devices.
 
 ## Tech Stack
