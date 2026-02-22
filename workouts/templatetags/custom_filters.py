@@ -34,35 +34,3 @@ def stars(value):
 
     return mark_safe(html)
 
-
-@register.filter
-def duration_format(minutes):
-    if minutes >= 60:
-        hours = minutes // 60
-        mins = minutes % 60
-        return f"{hours}h {mins}m"
-    return f"{minutes}m"
-
-
-@register.filter
-def difficulty_color(value):
-    colors = {
-        1: 'green',
-        2: 'yellow',
-        3: 'red',
-    }
-    return colors.get(value, 'gray')
-
-
-@register.filter
-def progress_percentage(value, total):
-    if total == 0:
-        return 0
-    return int((value / total) * 100)
-
-
-@register.simple_tag
-def calculate_bmi(weight_kg, height_m):
-    if weight_kg and height_m and height_m > 0:
-        return round(weight_kg / (height_m ** 2), 1)
-    return None
