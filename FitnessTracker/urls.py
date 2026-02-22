@@ -1,22 +1,15 @@
-"""
-URL configuration for FitnessTracker project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/6.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from progress.views import dashboard
+from .views import custom_404
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', dashboard, name='dashboard'),
+    path('exercises/', include('exercises.urls')),
+    path('workouts/', include('workouts.urls')),
+    path('progress/', include('progress.urls')),
+    path('custom-404/', custom_404, name='custom404'),
 ]
+
+handler404 = 'FitnessTracker.views.custom_404'
