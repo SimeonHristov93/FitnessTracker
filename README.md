@@ -44,7 +44,6 @@ A comprehensive web application for tracking your fitness journey, built with Dj
     Create a `.env` file in the root directory and add the following variables:
 
     ```env
-    SECRET_KEY=django-insecure-t@ei6mlsfz=5=43-!w63pr1a4n7-82dfra^lfr44m-)qix=gbl
     DEBUG=False
     DB_NAME=fitness_tracker_db
     DB_USER=postgres
