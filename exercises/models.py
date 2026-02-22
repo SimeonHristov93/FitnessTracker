@@ -1,5 +1,4 @@
 from django.db import models
-from django.db import models
 from django.core.validators import MinValueValidator
 from workouts.models import Workout
 from .validators import validate_rest_time, validate_name_length, validate_max_reps, validate_max_sets
