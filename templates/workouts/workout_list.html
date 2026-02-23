@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+
+{% block page_title %}Workout Plans{% endblock %}
+
+{% block content %}
+<div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-white">Available Workouts</h1>
+    <a href="{% url 'workouts:workout_create' %}" class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white font-semibold text-sm rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+        </svg>
+        Create Workout
+    </a>
+</div>
+
+<div class="bg-gray-800 p-4 rounded-lg mb-6">
+    <form method="get" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+            <label for="type" class="block text-sm font-medium text-gray-300">Workout Type</label>
+            <select name="type" id="type" class="mt-1 block w-full px-4 py-2 bg-gray-700 border-gray-600 text-white rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                <option value="">All Types</option>
+                {% for value, label in workout_types %}
+                <option value="{{ value }}" {% if request.GET.type == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label for="difficulty" class="block text-sm font-medium text-gray-300">Difficulty</label>
+            <select name="difficulty" id="difficulty" class="mt-1 block w-full px-4 py-2 bg-gray-700 border-gray-600 text-white rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                <option value="">All Levels</option>
+                {% for value, label in difficulty_levels %}
+                <option value="{{ value }}" {% if request.GET.difficulty == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="flex items-end">
+            <button type="submit" class="w-full md:w-auto px-4 py-2 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Filter</button>
+            <a href="{% url 'workouts:workout_list' %}" class="ml-2 w-full md:w-auto px-4 py-2 bg-gray-600 text-white font-semibold rounded-lg shadow-md hover:bg-gray-700">Clear</a>
+        </div>
+    </form>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for workout in workouts %}
+        {% include 'partials/workout_card.html' with workout=workout %}
+    {% empty %}
+    <div class="col-span-full bg-gray-800 rounded-lg p-8 text-center">
+        <h4 class="text-xl font-semibold text-white">No workouts found!</h4>
+        <p class="text-gray-400 mt-2">Create your first workout plan to get started.</p>
+        <a href="{% url 'workouts:workout_create' %}" class="mt-4 inline-block px-6 py-2 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700">Create Workout</a>
+    </div>
+    {% endfor %}
+</div>
+
+{% if is_paginated %}
+<nav class="mt-8 flex justify-center">
+    <ul class="inline-flex items-center -space-x-px">
+        {% if page_obj.has_previous %}
+        <li>
+            <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.type %}&type={{ request.GET.type }}{% endif %}{% if request.GET.difficulty %}&difficulty={{ request.GET.difficulty }}{% endif %}" class="py-2 px-3 ml-0 leading-tight text-gray-400 bg-gray-800 rounded-l-lg border border-gray-700 hover:bg-gray-700 hover:text-white">Previous</a>
+        </li>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+            <li>
+                <span class="py-2 px-3 leading-tight text-white bg-indigo-600 border border-indigo-600">{{ num }}</span>
+            </li>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+            <li>
+                <a href="?page={{ num }}{% if request.GET.type %}&type={{ request.GET.type }}{% endif %}{% if request.GET.difficulty %}&difficulty={{ request.GET.difficulty }}{% endif %}" class="py-2 px-3 leading-tight text-gray-400 bg-gray-800 border border-gray-700 hover:bg-gray-700 hover:text-white">{{ num }}</a>
+            </li>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+        <li>
+            <a href="?page={{ page_obj.next_page_number }}{% if request.GET.type %}&type={{ request.GET.type }}{% endif %}{% if request.GET.difficulty %}&difficulty={{ request.GET.difficulty }}{% endif %}" class="py-2 px-3 leading-tight text-gray-400 bg-gray-800 rounded-r-lg border border-gray-700 hover:bg-gray-700 hover:text-white">Next</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+{% endblock %}

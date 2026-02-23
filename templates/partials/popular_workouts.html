@@ -1,0 +1,24 @@
+<div class="bg-gray-800 rounded-lg shadow-lg">
+    <div class="p-4 border-b border-gray-700">
+        <h5 class="text-lg font-bold text-white">Most Popular Workouts</h5>
+    </div>
+    <div class="p-4">
+        {% if workout_stats %}
+        <ul class="divide-y divide-gray-700">
+            {% for workout in workout_stats %}
+            <li class="py-3 flex justify-between items-center">
+                <div>
+                    <p class="text-sm font-medium text-white">{{ workout.name }}</p>
+                    <p class="text-xs text-gray-400">{{ workout.get_workout_type_display }}</p>
+                </div>
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-600 text-indigo-100">
+                    {{ workout.log_count }}
+                </span>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="text-gray-400 text-center py-8">No workout data available</p>
+        {% endif %}
+    </div>
+</div>

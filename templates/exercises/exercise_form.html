@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% block page_title %}{% if form.instance.pk %}Edit Exercise{% else %}Add Exercise{% endif %}{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <div class="bg-gray-800 shadow-lg rounded-lg overflow-hidden">
+        <div class="p-6 border-b border-gray-700">
+            <h2 class="text-2xl font-bold text-white">{% if form.instance.pk %}Edit Exercise{% else %}Add New Exercise{% endif %}</h2>
+            <p class="text-gray-400 text-sm mt-1">Define the details of your exercise.</p>
+        </div>
+
+        <form method="post" class="p-6 space-y-6">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                    <strong class="font-bold">Error!</strong>
+                    <span class="block sm:inline">{{ form.non_field_errors }}</span>
+                </div>
+            {% endif %}
+
+            <div class="grid grid-cols-1 gap-6">
+                <div>
+                    <label for="{{ form.name.id_for_label }}" class="block text-sm font-medium text-gray-300">Exercise Name</label>
+                    <div class="mt-1">
+                        {{ form.name }}
+                    </div>
+                    {% if form.name.errors %}
+                        <p class="mt-2 text-sm text-red-600">{{ form.name.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <label for="{{ form.description.id_for_label }}" class="block text-sm font-medium text-gray-300">Description</label>
+                    <div class="mt-1">
+                        {{ form.description }}
+                    </div>
+                    {% if form.description.errors %}
+                        <p class="mt-2 text-sm text-red-600">{{ form.description.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="{{ form.muscle_group.id_for_label }}" class="block text-sm font-medium text-gray-300">Muscle Group</label>
+                        <div class="mt-1">
+                            {{ form.muscle_group }}
+                        </div>
+                        {% if form.muscle_group.errors %}
+                            <p class="mt-2 text-sm text-red-600">{{ form.muscle_group.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <label for="{{ form.equipment.id_for_label }}" class="block text-sm font-medium text-gray-300">Equipment</label>
+                        <div class="mt-1">
+                            {{ form.equipment }}
+                        </div>
+                        {% if form.equipment.errors %}
+                            <p class="mt-2 text-sm text-red-600">{{ form.equipment.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label for="{{ form.sets.id_for_label }}" class="block text-sm font-medium text-gray-300">Sets</label>
+                        <div class="mt-1">
+                            {{ form.sets }}
+                        </div>
+                        {% if form.sets.help_text %}
+                            <p class="mt-1 text-xs text-gray-500">{{ form.sets.help_text }}</p>
+                        {% endif %}
+                        {% if form.sets.errors %}
+                            <p class="mt-2 text-sm text-red-600">{{ form.sets.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <label for="{{ form.reps.id_for_label }}" class="block text-sm font-medium text-gray-300">Reps</label>
+                        <div class="mt-1">
+                            {{ form.reps }}
+                        </div>
+                        {% if form.reps.help_text %}
+                            <p class="mt-1 text-xs text-gray-500">{{ form.reps.help_text }}</p>
+                        {% endif %}
+                        {% if form.reps.errors %}
+                            <p class="mt-2 text-sm text-red-600">{{ form.reps.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <label for="{{ form.rest_seconds.id_for_label }}" class="block text-sm font-medium text-gray-300">Rest (seconds)</label>
+                        <div class="mt-1">
+                            {{ form.rest_seconds }}
+                        </div>
+                        {% if form.rest_seconds.help_text %}
+                            <p class="mt-1 text-xs text-gray-500">{{ form.rest_seconds.help_text }}</p>
+                        {% endif %}
+                        {% if form.rest_seconds.errors %}
+                            <p class="mt-2 text-sm text-red-600">{{ form.rest_seconds.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div>
+                    <label for="{{ form.workout.id_for_label }}" class="block text-sm font-medium text-gray-300">Workout</label>
+                    <div class="mt-1">
+                        {{ form.workout }}
+                    </div>
+                    {% if form.workout.errors %}
+                        <p class="mt-2 text-sm text-red-600">{{ form.workout.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="flex justify-end space-x-3 pt-6 border-t border-gray-700">
+                <a href="{% url 'exercises:exercise_list' %}" class="bg-gray-600 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                    Cancel
+                </a>
+                <button type="submit" class="bg-indigo-600 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    {% if form.instance.pk %}Update Exercise{% else %}Create Exercise{% endif %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

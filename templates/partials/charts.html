@@ -1,0 +1,101 @@
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+    <div class="bg-gray-800 rounded-lg shadow-lg p-4">
+        <h5 class="text-lg font-bold text-white mb-4">Workout Duration (Last 7 Days)</h5>
+        <canvas id="durationChart"></canvas>
+    </div>
+    <div class="bg-gray-800 rounded-lg shadow-lg p-4">
+        <h5 class="text-lg font-bold text-white mb-4">Calories Burned (Last 7 Days)</h5>
+        <canvas id="caloriesChart"></canvas>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const labels = {{ chart_labels|safe }};
+        const durationData = {{ chart_data_duration|safe }};
+        const caloriesData = {{ chart_data_calories|safe }};
+
+        new Chart(document.getElementById('durationChart'), {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Minutes',
+                    data: durationData,
+                    borderColor: '#4f46e5',
+                    backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: '#9ca3af'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: '#9ca3af'
+                        }
+                    }
+                }
+            }
+        });
+
+        new Chart(document.getElementById('caloriesChart'), {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Calories',
+                    data: caloriesData,
+                    backgroundColor: '#f59e0b',
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: '#9ca3af'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: '#9ca3af'
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>

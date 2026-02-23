@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+    {% include 'partials/stats_cards.html' %}
+
+    {% include 'partials/charts.html' %}
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+        {% include 'partials/recent_activity.html' %}
+        {% include 'partials/popular_workouts.html' %}
+    </div>
+
+    {% include 'partials/quick_actions.html' %}
+{% endblock %}

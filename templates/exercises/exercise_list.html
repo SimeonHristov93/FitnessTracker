@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block page_title %}All Exercises{% endblock %}
+
+{% block content %}
+<div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-white">Available Exercises</h1>
+    <a href="{% url 'exercises:exercise_create' %}" class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white font-semibold text-sm rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+        </svg>
+        Add Exercise
+    </a>
+</div>
+
+<div class="bg-gray-800 shadow-lg rounded-lg overflow-hidden">
+    <div class="overflow-x-auto">
+        <table class="min-w-full">
+            <thead class="bg-gray-700/50">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Name</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Muscle Group</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Workout</th>
+                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-300 uppercase tracking-wider">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="bg-gray-800 divide-y divide-gray-700">
+                {% for exercise in exercises %}
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">{{ exercise.name }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">{{ exercise.get_muscle_group_display }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">{{ exercise.workout.name }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
+                        <a href="{% url 'exercises:exercise_update' exercise.pk %}" class="text-indigo-400 hover:text-indigo-300">Edit</a>
+                        <a href="{% url 'exercises:exercise_delete' exercise.pk %}" class="text-red-400 hover:text-red-300">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-400">No exercises found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
